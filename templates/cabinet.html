@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cabinet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+
+
+
+<body>
+<!-- Banner with background image and overlaid heading + buttons -->
+<div class="position-relative text-white mb-5"
+     style="background-image: url('https://img.freepik.com/free-photo/egg-carton-mushroom-polenta-onion-broccoli-wooden-desk_23-2148062354.jpg?semt=ais_hybrid&w=740');
+            background-size: cover;
+            background-position: center;
+            height: 220px;">
+
+    <!-- Dark overlay -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0,0,0,0.3);"></div>
+
+    <!-- Content over image -->
+    <div class="position-relative z-1 h-100 d-flex align-items-end pb-2 px-4 justify-content-between">
+        <!-- Left: Heading -->
+        <h1 class="fs-1 fw-bolder m-0">Your Pantry</h1>
+
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-3">
+            <a href="/" class="btn btn-light fw-bold">Home</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container px-2">
+    <!-- Form to add or update a cabinet item -->
+<form method="POST" class="row g-3 mb-5">
+    <div class="col-md-4">
+        <label for="ingredient_name" class="form-label fw-bold">Ingredient Name</label>
+        <input type="text" class="form-control" name="ingredient_name" id="ingredient_name" required>
+    </div>
+    <div class="col-md-3">
+        <label for="quantity" class="form-label fw-bold">Quantity You Have</label>
+        <input type="number" class="form-control" name="quantity" id="quantity" step="0.01" required>
+    </div>
+    <div class="col-md-3">
+        <label for="unit" class="form-label fw-bold">Unit</label>
+        <select class="form-select" name="unit" id="unit" required>
+            <option value="Cups">Cups</option>
+            <option value="Lbs">Lbs</option>
+            <option value="Ounces">Ounces</option>
+            <option value="Tsp">Tsp</option>
+            <option value="Tbsp">Tbsp</option>
+            <option value="mL">mL</option>
+            <option value="Cloves">Cloves</option>
+            <option value="Eggs">Eggs</option>
+            <option value="Whole">Whole</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-outline-dark w-100">Add / Update</button>
+    </div>
+</form>
+
+
+    <!-- Cabinet contents table -->
+    <h2>Current Cabinet</h2>
+{% if cabinet_items %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ingredient</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cabinet_items %}
+        <tr>
+            <td>{{ item.ingredient.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.unit }}</td> <!-- Now assumes all ingredients must have a unit -->
+            <td>
+                <form method="POST" action="/cabinet/delete">
+                    <input type="hidden" name="cabinet_id" value="{{ item.id }}">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">Your cabinet is currently empty.</p>
+{% endif %}
+</div>
+</body>
+</html>

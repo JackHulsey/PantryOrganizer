@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Add Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <form method="POST">
+<!-- Banner with background image and overlaid heading + buttons -->
+<div class="position-relative text-white mb-5"
+     style="background-image: url('https://img.freepik.com/free-photo/composition-with-baking-ingredients-kitchen-accessories-white-table_169016-8713.jpg?semt=ais_items_boosted&w=740');
+            background-size: cover;
+            background-position: bottom;
+            height: 220px;">
+
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0,0,0,0.3);"></div>
+
+    <div class="position-relative z-1 h-100 d-flex align-items-end pb-2 px-4 justify-content-between">
+        <!-- Left: Editable recipe name -->
+        <input type="text" name="name" value="Recipe Name"
+               class="form-control-plaintext text-white fw-bolder fs-1 m-0"
+               style="background: transparent; border: none; outline: none; width: auto;">
+
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-3">
+            <a href="/" class="btn btn-light fw-bold">Home</a>
+        </div>
+    </div>
+</div>
+        <div class="container px-2">
+        <h3>Ingredients:</h3>
+        <div id="ingredients">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                <input type="text" class="form-control" name="ingredient_name" id="ingredient_name">
+                                <label for="ingredient_name">Ingredient</label>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                    <input type="text" class="form-control" name ="ingredient_quantity" id="ingredient_quantity">
+                                    <label for="ingredient_quantity">Quantity</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                            <select class="form-select" name="ingredient_unit" id="ingredient_unit">
+        <option value="Cups">Cups</option>
+        <option value="Lbs">Lbs</option>
+        <option value="Ounces">Ounces</option>
+        <option value="Tsp">Tsp</option>
+        <option value="Tbsp">Tbsp</option>
+        <option value="mL">mL</option>
+        <option value="Cloves">Cloves</option>
+        <option value="Eggs">Eggs</option>
+        <option value="Whole">Whole</option>
+
+                            </select>
+                            <label for="ingredient_unit">Unit</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark" onclick="addIngredient()">Add Another Ingredient</button><br><br>
+        <button type="submit" class="btn btn-outline-dark">Save Recipe</button>
+            </div>
+    </form>
+
+    <script>
+        function addIngredient() {
+            const container = document.getElementById('ingredients');
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="container">
+                <div class="row g-2">
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                <input type="text" class="form-control" name="ingredient_name"  id="ingredient_name">
+                                <label for="ingredient_name">Ingredient</label>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                    <input type="text" class="form-control" name="ingredient_quantity"  id="ingredient_quantity">
+                                    <label for="ingredient_quantity">Quantity</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                            <select class="form-select" name="ingredient_unit"  id="ingredient_unit">
+        <option selected value="Cups">Cups</option>
+        <option value="Lbs">Lbs</option>
+        <option value="Ounces">Ounces</option>
+        <option value="Tsp">Tsp</option>
+        <option value="Tbsp">Tbsp</option>
+        <option value="Cloves">Cloves</option>
+        <option value="Eggs">Eggs</option>
+        <option value="Whole">Whole</option>
+                            </select>
+                            <label for="ingredient_unit">Unit</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `;
+            container.appendChild(div);
+        }
+    </script>
+</body>
+</html>

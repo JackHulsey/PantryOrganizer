@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit {{ recipe.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+<form method="POST">
+<!-- Banner with background image and overlaid heading + buttons -->
+<div class="position-relative text-white mb-5"
+     style="background-image: url('https://img.freepik.com/free-photo/fresh-vegetables-eggs-rice-grains-puffed-rice-cake-wooden-desk_23-2148062363.jpg');
+            background-size: cover;
+            background-position: bottom;
+            height: 220px;">
+
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0,0,0,0.3);"></div>
+
+    <div class="position-relative z-1 h-100 d-flex align-items-end pb-2 px-4 justify-content-between">
+        <!-- Left: Editable recipe name -->
+        <input type="text" name="name" value="{{ recipe.name }}"
+               class="form-control-plaintext text-white fw-bolder fs-1 m-0"
+               style="background: transparent; border: none; outline: none; width: auto;">
+
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-3">
+            <a href="/" class="btn btn-light fw-bold">Home</a>
+        </div>
+    </div>
+</div>
+<div class="container px-2">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+        <h3 class="fw-bolder">Ingredients</h3>
+        <div id="ingredients">
+            {% for ri in recipe.ingredients %}
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                <input type="text" class="form-control" name="ingredient_name" id="ingredient_name" value="{{ ri.ingredient.name }}">
+                            <label for="ingredient_name">Ingredient</label>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                    <input type="text" class="form-control" name ="ingredient_quantity" id="ingredient_quantity" value="{{ ri.quantity }}">
+                                    <label for="ingredient_quantity">Quantity</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                            <select class="form-select" name="ingredient_unit" id="ingredient_unit">
+                                <option value="Cups" {% if ri.ingredient.unit=="Cups" %}selected="selected"{% endif %}>Cups</option>
+                                <option value="Lbs" {% if ri.ingredient.unit=="Lbs" %}selected="selected"{% endif %}>Lbs</option>
+                                <option value="Ounces" {% if ri.ingredient.unit=="Ounces" %}selected="selected"{% endif %}>Ounces</option>
+                                <option value="Tsp" {% if ri.ingredient.unit=="Tsp" %}selected="selected"{% endif %}>Tsp</option>
+                                <option value="Tbsp" {% if ri.ingredient.unit=="Tbsp" %}selected="selected"{% endif %}>Tbsp</option>
+                                <option value="mL" {% if ri.ingredient.unit=="mL" %}selected="selected"{% endif %}>mL</option>
+                                <option value="Cloves" {% if ri.ingredient.unit=="Cloves" %}selected="selected"{% endif %}>Cloves</option>
+                                <option value="Eggs" {% if ri.ingredient.unit=="Eggs" %}selected="selected"{% endif %}>Eggs</option>
+                                <option value="Whole" {% if ri.ingredient.unit=="Whole" %}selected="selected"{% endif %}>Whole</option>
+                            </select>
+                            <label for="ingredient_unit">Unit</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="button" class="btn btn-outline-dark" onclick="addIngredient()">Add Ingredient</button><br><br>
+        <button type="submit" class="btn btn-outline-dark">Save Changes</button>
+
+        <button type="submit" class="btn btn-outline-danger" name="delete" onclick="return confirm('Are you sure you want to delete this recipe?');">
+        Delete Recipe
+        </button>
+    </div>
+    </form>
+
+    <script>
+        function addIngredient() {
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="container">
+                <div class="row g-2">
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                <input type="text" class="form-control" name="ingredient_name"  id="ingredient_name">
+                                <label for="ingredient_name">Ingredient</label>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                                    <input type="text" class="form-control" name="ingredient_quantity"  id="ingredient_quantity">
+                                    <label for="ingredient_quantity">Quantity</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating">
+                            <select class="form-select" name="ingredient_unit"  id="ingredient_unit">
+        <option selected value="Cups">Cups</option>
+        <option value="Lbs">Lbs</option>
+        <option value="Ounces">Ounces</option>
+        <option value="Tsp">Tsp</option>
+        <option value="Tbsp">Tbsp</option>
+        <option value="Cloves">Cloves</option>
+        <option value="Eggs">Eggs</option>
+        <option value="Whole">Whole</option>
+                            </select>
+                            <label for="ingredient_unit">Unit</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `;
+            document.getElementById('ingredients').appendChild(div);
+        }
+    </script>
+</body>
+</html>
